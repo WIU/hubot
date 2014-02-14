@@ -37,6 +37,45 @@ remote_directory "#{node['hubot']['install_dir']}/scripts" do
 end
 ```
 
+## Proxy for Hubot
+
+If you run hubot behind a corporate firewall and need to go through a web proxy,
+many hubot scripts will not work.
+
+This is as of hubot 2.7.1.  Newer releases may fix this.  See these...
+https://github.com/github/hubot/issues/287
+https://github.com/github/hubot/pull/612
+
+As a workaround you can install proxychains-ng and modify the hubot service to
+redirect requests through an internal proxy.
+
+Attribute       | Description |Type | Default
+----------------|-------------|-----|--------
+proxy_ip       | IP address of the proxy server. | String  | nil      |
+proxy_port     | Port number of the proxy server. | Integer  | nil      |
+proxy_username | Proxy username | String | nil |
+proxy_password | Proxy password | String | nil |
+proxychains.proxy_dns | Proxy DNS requests | Boolean | false |
+proxychains.localnet | Do not proxy these networks | String Array | Array.new |
+
+Setting a proxy address (e.g. http://proxy.here.com:8080) will tell the hubot
+cookbook to install proxychains-ng from source.
+
+By default proxychains will attempt to direct DNS requests through your proxy as
+well.  This is likely not the default behavior you want, so leave this as false.
+
+The localnet Array defines the list of local networks you do not want to proxy.
+Formatting would look similar to this...
+
+default["hubot"]["proxychains"]["localnet"] = %w{
+  localnet 10.0.0.0/255.0.0.0
+  localnet 1.2.3.0/255.255.255.0
+}
+
+See the proxychains.conf example here for more details...
+https://github.com/haad/proxychains/blob/master/src/proxychains.conf
+
+
 # Requirements
 
 ## Chef

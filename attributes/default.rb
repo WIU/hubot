@@ -29,3 +29,10 @@ default['hubot']['adapter'] = "campfire"
 default['hubot']['config'] = Hash.new
 default['hubot']['dependencies'] = Hash.new
 default['hubot']['hubot_scripts'] = Array.new
+
+default['hubot']['proxy_ip'] = nil
+default['hubot']['proxy_port'] = nil
+default['hubot']['proxy_password'] = nil
+default['hubot']['proxy_username'] = nil
+default['hubot']['proxychains']['proxy_dns'] = false
+default['hubot']['proxychains']['localnet'] = Array.new
